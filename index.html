@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <title>Simple Weather</title>
+</head>
+
+<style>
+    .sidebar {
+    width: 180px;
+    }
+
+    @media (min-width: 768px) {
+        .main {
+            padding-right: 40px;
+            padding-left: 220px; /* 180 + 40 */
+        }
+    }
+
+    .border-blk {
+        border-top: 1px solid black;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        border-left: 1px solid black;
+    }
+
+    .border-red {
+        border-top: 1px solid red;
+        border-right: 1px solid red;
+        border-bottom: 1px solid red;
+        border-left: 1px solid red;
+    }
+
+    .border-grn {
+        border-top: 1px solid green;
+        border-right: 1px solid green;
+        border-bottom: 1px solid green;
+        border-left: 1px solid green;
+
+    }
+
+    .height-1 {
+        height: 100vh;
+    }
+
+</style>
+
+
+<body>
+    <!-- From: 05-Third Party 13-Ins_Bootstrap-Layout -->
+    <header class="container-fluid bg-dark text-light mb-5 p-3">
+        <div class="d-flex align-items-center">
+          <h1>Simple Weather</h1>
+
+        </div>
+    </header>
+
+    <!-- Two column layout -->
+    <!-- my-5 m=margin, y=top & bottom See https://getbootstrap.com/docs/4.0/utilities/spacing/ -->
+    <section class="container my-5">
+        <div class="row border-blk height-1">
+            <div class="col-3 border-blk">
+                <!-- The form -->
+                <form class="example" action="action_page.php">
+                    <input type="text" placeholder="Search.." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+                <ul id="choices-list" class="tech">
+                </ul>
+                Row 1 col 1 Sidebar</br></br></br></br>Bottom
+            </div>
+            <div class="col">
+                <div class="row border-red">
+                    <table id="hofTable" class="tab-border">
+                        <!-- Temp</br>Wind</br>Precip</br></br></br> -->
+                </div>
+                <div class="row">
+                    <div class="col border-grn"> Day 1 Forecast</br></br></br></div>
+                    <div class="col border-grn"> Day 2 Forecast</br></br></br></div>
+                    <div class="col border-grn"> Day 3 Forecast</br></br></br></div>
+                    <div class="col border-grn"> Day 4 Forecast</br></br></br></div>
+                    <div class="col border-grn"> Day 5 Forecast</br></br></br></div>
+
+                </div>
+            <div>
+        </div>
+    </section>
+<script type="text/javascript" src="./assets/script.js"></script>
+<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>-->
+</body>
+</html>
