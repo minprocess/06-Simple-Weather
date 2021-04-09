@@ -41,7 +41,7 @@
         border-right: 1px solid green;
         border-bottom: 1px solid green;
         border-left: 1px solid green;
-
+        border-radius: 5px;
     }
 
     .height-1 {
@@ -66,25 +66,27 @@
         <div class="row border-blk height-1">
             <div class="col-3 border-blk">
                 <!-- The form -->
-                <form class="example" action="action_page.php">
-                    <input type="text" placeholder="Search.." name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-                <ul id="choices-list" class="tech">
+                <p>Only cities found in OpenWeather database will be added to list of recent locations</p>
+                <p>Location</p>
+                <textarea rows="1" name="location" id="location"></textarea>
+                <button type="button" name="btn-searc" id="btn-searc">Search</button>
+
+                <ul id="location-list" class="tech">
                 </ul>
-                Row 1 col 1 Sidebar</br></br></br></br>Bottom
             </div>
             <div class="col">
                 <div class="row border-red">
-                    <table id="hofTable" class="tab-border">
+                    <h2 id="summary-loc"></h2>
+                    <table id="summary-table" class="tab-border">
                         <!-- Temp</br>Wind</br>Precip</br></br></br> -->
+                    </table>
                 </div>
                 <div class="row">
-                    <div class="col border-grn"> Day 1 Forecast</br></br></br></div>
-                    <div class="col border-grn"> Day 2 Forecast</br></br></br></div>
-                    <div class="col border-grn"> Day 3 Forecast</br></br></br></div>
-                    <div class="col border-grn"> Day 4 Forecast</br></br></br></div>
-                    <div class="col border-grn"> Day 5 Forecast</br></br></br></div>
+                    <div class="col border-grn forecast"> Day 1 Forecast</br></br></br></div>
+                    <div class="col border-grn forecast"> Day 2 Forecast</br></br></br></div>
+                    <div class="col border-grn forecast"> Day 3 Forecast</br></br></br></div>
+                    <div class="col border-grn forecast"> Day 4 Forecast</br></br></br></div>
+                    <div class="col border-grn forecast"> Day 5 Forecast</br></br></br></div>
 
                 </div>
             <div>

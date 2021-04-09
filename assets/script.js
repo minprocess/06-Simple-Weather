@@ -1,46 +1,78 @@
 // get location
 
-function getWeather2() {
-    var locQueryUrl = "https://api.openweathermap.org/data/2.5/weather?q=London&APPID=06d8f6fe2e2745ccf1ea96dd0ca1238c";
+var currLoc = {name:London, lat:};  // current location
+var currLocTemp;
 
-    fetch(locQueryUrl)
-      .then(function (response) {
-        console.log("In first .then after fetch");
-        if (!response.ok) {
-          throw response.json();
-        }
-    
-        return response.json();
-      })
-      .then(function (locRes) {
-        console.log("In seconds .then after fetch");
-        // write query to page so user knows what they are viewing
-    
-    
-        //resultTextEl.textContent = locRes.search.query;
-    
-        console.log(locRes);
-    /*
-        if (!locRes.results.length) {
-          console.log('No results found!');
-          resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-        } else {
-          resultContentEl.textContent = '';
-          for (var i = 0; i < locRes.results.length; i++) {
-            printResults(locRes.results[i]);
-          }   // end of for i
-        }*/    //end of else
-      }    // end of second .then
-      )    // end of pararentheses for second then
-      .catch(function (error) {
-        console.error(error);
-      });
-    
+let locTextBox = document.getElementById('location'),
+btnSearch = document.getElementById('btn-search');
+
+var locList = document.querySelector("#location-list");  // ul
+var locStored;   // initials, score, correct answers; equivalent to hofInitials, hofScores, hofCorrAns
+
+var summaryLoc = document.querySelector("summary-loc");
+
+Init();
+
+locTextBox.addEventListener('keydown', (e) => {
+    if (!e.repeat) {
+      if (e.code == "Enter") {
+        currLoc = locTextBox.value;
+        console.log("Enter key struck, location is: ", currLoc);
+      }
+    }
+});
+
+function Init() {
+  locStored = JSON.parse(localStorage.getItem("locStored") || "[]");
+  fillLocList();
 }
 
-// HOF = Hall of Fame
-function getWeather() {
+function addLocToList(i, loc) {
+  var valid = validateLocation(loc);
+  if (!valid) { return; }
+  var li = document.createElement("li");
+  li.textContent = locStored[i];
+  li.setAttribute("data-index", i);
 
+  locList.appendChild(li);
+}
+
+function validateLocation(loc) {
+
+}
+
+function fillLocList() {
+    // Create six choices that user can choose from
+    for (var i = 0; i < locStored.length; i++) {
+      addLocToList(i, locStored[i]);
+    }
+}    // end of setAtributes
+
+btnSearch.addEventListener('click', (e) => {
+  currLocTemp
+  let child = consoleLog.firstChild;
+  while (child) {
+   consoleLog.removeChild(child);
+   child = consoleLog.firstChild;
+  }
+});
+
+/*
+function onClickLoc (form) {
+    currLoc = form.inputbox.value;
+    console.log ("You typed: " + TestVar);
+}
+*/
+
+function getOneCall() {
+
+}
+
+function getCoords(currLoc.city) {
+  var data = getWeather
+}
+
+function getWeather() {
     /*
     var geocoder = new google.maps.Geocoder();
     var address = "new york";
@@ -55,9 +87,23 @@ function getWeather() {
         } 
     }); 
     */
-    const APIkey = "06d8f6fe2e2745ccf1ea96dd0ca1238c";
-    const endpoint1 = "https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={APIkey}";
 
+    var city = "London";
+    //var city = document.getElementById("searchbar").value;
+    const APIkey = "06d8f6fe2e2745ccf1ea96dd0ca1238c";
+    //const endpoint1 = "https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={APIkey}";
+    const endpoint1 = "http://api.openweathermap.org/data/2.5/weather?q=London&APPID=06d8f6fe2e2745ccf1ea96dd0ca1238c";
+    console.log("endpoint1", endpoint1);
+    fetch(endpoint1)
+        .then(response => response.json())
+        .then (data => {
+            console.log("by name");
+            console.log(data);
+        })
+        .catch(err => alert(err))
+
+        var lat = 39.9523;
+        var lon = -76.1638;
     
     let summary = [
         {name: "Termperature:", value: "0 F" },
@@ -66,11 +112,12 @@ function getWeather() {
         {name: "UV Index", value: "0" }
     ]
 
-    var searcharg = document.getElementById("searchbar").value;
-    //var endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${searcharg}&units=metric&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c`;
-    const endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={APIkey}";
 
-    fetch(endpoint)
+    //var endpoint = `https://api.openweathermap.org/data/2.5/weather?q=${searcharg}&units=metric&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c`;
+    //const endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid={APIkey}";
+    const endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat=39.9523&lon=-76.1638&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c";
+
+    fetch(endpoint2)
         .then(response => response.json())
         .then (data => {
             console.log("Click");
@@ -83,56 +130,62 @@ function getWeather() {
     $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=London&APPID=06d8f6fe2e2745ccf1ea96dd0ca1238c", function(json) {
         console.log(JSON.stringify(json));
     });
-  */
+    */
 
 
-/*
-    summary[0].value = "0 F"
 
-    var tbl = document.querySelector("#hofTable");
-    var tblBody = document.createElement("tbody");
-  
-    // Heading row
+}
+
+function fillSummary() {
+
+  summaryLoc.textContent = currLoc;
+
+  summary[0].value = "0 deg F";
+  summary[0].value = "31%";
+  summary[2].value = "13 MPH";
+  summary[3].value = "9.36";  // UV index
+
+  var uvBgdC = "lightgreen";
+  if (summary[3].value > 4.0 && summary[3].value <= 7.0) {
+      var uvBgdC = "yellow";
+  }
+  else if (summary[3].value > 7.0) {
+      var uvBgdC = "red";
+  }
+
+  var tbl = document.querySelector("#summary-table");
+  var tblBody = document.createElement("tbody");
+
+  // creating all cells
+  //for (var i = 0; i < Math.min(10, hofStored.length); i++) {
+  for (var i = 0; i < 4; i++) {
+    // creates a table row
     var row = document.createElement("tr");
-    var msg3 = ["Initials", "Score", "Correct answers"];
-  
-    for (var j = 0; j < 3; j++) {
+
+    var msg2 = [summary[i].name, summary[i].value];
+
+    for (var j = 0; j < 2; j++) {
       // Create a <td> element and a text node, make the text
       // node the contents of the <td>, and put the <td> at
       // the end of the table row
       var cell = document.createElement("td");
-      var cellText = document.createTextNode(msg3[j]);
+      var cellText = document.createTextNode(msg2[j]);
       cell.appendChild(cellText);
       row.appendChild(cell);
     }
-  
+
     // add the row to the end of the table body
     tblBody.appendChild(row);
     //tbl.appendChild(row);
+  }
   
-  
-    // creating all cells
-    for (var i = 0; i < Math.min(10, hofStored.length); i++) {
-      // creates a table row
-      var row = document.createElement("tr");
-  
-      var msg2 = [hofStored[i].initials, hofStored[i].score, hofStored[i].corrans];
-  
-      for (var j = 0; j < 3; j++) {
-        // Create a <td> element and a text node, make the text
-        // node the contents of the <td>, and put the <td> at
-        // the end of the table row
-        var cell = document.createElement("td");
-        var cellText = document.createTextNode(msg2[j]);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-      }
-  
-      // add the row to the end of the table body
-      tblBody.appendChild(row);
-      //tbl.appendChild(row);
-    }
-*/  
+  // put the <tbody> in the <table>
+  tbl.appendChild(tblBody);
+
+  // appends <table> into <body>
+  document.body.appendChild(tbl);
+
 }
 
+generateBtn.addEventListener('click', writePassword);
 getWeather();

@@ -1,35 +1,40 @@
 
-/* Style the search field */
-form.example input[type=text] {
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    float: left;
-    width: 80%;
-    background: #f1f1f1;
-  }
-  
-  /* Style the submit button */
-  form.example button {
-    float: left;
-    width: 20%;
-    padding: 10px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none; /* Prevent double borders */
-    cursor: pointer;
-  }
-  
-  form.example button:hover {
-    background: #0b7dda;
-  }
-  
-  /* Clear floats */
-  form.example::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
+
+.forecast {
+  background-color: lightskyblue;
+}
+
+
+/* Menu of choices to answer questions */
+.tech ul {
+  padding: 0px 0px 0px 0px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  list-style:none;
+  list-style-position:outside;
+}
+
+.tech li {
+display:block;
+width: 200px;
+text-align: center;
+background-color: purple;   /* original color: #cccccc */
+color: white;
+font-size:large;
+margin: 10px 0px 10px 0px;
+cursor: pointer;
+
+border-radius: 3px;
+-moz-border-radius: 3px;
+box-shadow: 2px 3px 5px #000000;
+}
+/*
+.tech li {
+  cursor: pointer;
+}
+*/
+.tech li:hover {
+  background-color: rgb(29, 87, 29);  /* rgb(29, 87, 29) */
+}
+
+
