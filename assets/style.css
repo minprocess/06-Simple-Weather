@@ -4,6 +4,43 @@
   background-color: lightskyblue;
 }
 
+.uv-low {
+  padding-left: 2px;
+  margin-left: 2px;
+  background-color: lightgreen;
+  margin-right: 2px;
+}
+
+.uv-mod {
+  margin-left: 2epx;
+  background-color: yellow;
+  margin-right: 2px;
+}
+
+.uv-high {
+  margin-left: 2epx;
+  background-color: orange;
+  margin-right: 2px;
+}
+
+.uv-very-high {
+  margin-left: 2px;
+  background-color: red;
+  margin-right: 2px;
+}
+
+.uv-extreme {
+  margin-left: 2px;
+  background-color: purple;
+  margin-right: 2px;
+}
+
+.uv-span-1 {
+  padding-left: 2em;
+  background-color: lightgreen;
+  padding-right: 2em;
+}
+
 
 /* Menu of choices to answer questions */
 .tech ul {

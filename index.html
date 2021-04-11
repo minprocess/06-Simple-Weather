@@ -66,20 +66,28 @@
         <div class="row border-blk height-1">
             <div class="col-3 border-blk">
                 <!-- The form -->
+                <p id="test-1"></p>   <!-- if test is true show it -->
                 <p>Only cities found in OpenWeather database will be added to list of recent locations</p>
                 <p>Location</p>
                 <textarea rows="1" name="location" id="location"></textarea>
-                <button type="button" name="btn-searc" id="btn-searc">Search</button>
-
+                <button type="button" name="btn-search" id="btn-search">Search</button>
                 <ul id="location-list" class="tech">
                 </ul>
             </div>
-            <div class="col">
+            <div class="col-9">
                 <div class="row border-red">
-                    <h2 id="summary-loc"></h2>
-                    <table id="summary-table" class="tab-border">
-                        <!-- Temp</br>Wind</br>Precip</br></br></br> -->
-                    </table>
+                    <div class="col">
+                        <p id="test-2"></p>   <!-- if test is true show it -->
+                        <h2 id="summary-loc"></h2>
+                        <p id="temp"></p>
+                        <p id="humidity"></p>
+                        <p id="wind-speed"></p>
+                        <p id="uv-index"><span id="span-1"></span><span id="span-2"></span><span id="span-3"></span></p>
+        
+                        <table id="summary-table" class="tab-border">
+                            <!-- Temp</br>Wind</br>Precip</br></br></br> -->
+                        </table>    
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col border-grn forecast"> Day 1 Forecast</br></br></br></div>
