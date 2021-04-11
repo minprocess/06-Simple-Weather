@@ -4,10 +4,8 @@
 
 const oneCallPath = "https://api.openweathermap.org/data/2.5/onecall";
 const APIkey = "06d8f6fe2e2745ccf1ea96dd0ca1238c";
+//var currLoc = {name:"Philadelphia", lat:39.9523, lon:-75.1625, valid: false};  // current location
 var currLoc = {name:"Philadelphia", lat:39.9523, lon:-75.1625, valid: false};  // current location
-
-let locTextBox = document.getElementById('location'),
-btnSearch = document.getElementById('btn-search');
 
 var locIndex = 0;
 var locList = document.querySelector("#location-list");  // ul
@@ -21,38 +19,33 @@ let summary = [
   {id: "#uv-index", name: "UV Index: ", value: "0", units: "" }
 ]
 
-var test = true;
-
 Init();
 
-locTextBox.addEventListener('keydown', (e) => {
-    if (!e.repeat) {
-        if (e.code == "Enter") {
-          var currLocName = locTextBox.value;
-          console.log("Enter key struck, location is: ", currLoc);
-          // Add 
-        }
-    }
-});
-
-btnSearch.addEventListener('click', (e) => {
-    var city = locTextBox.textContent;
-    var loc;  // loc.lon, log.lat, loc.valid
-    getCoords(city, loc);
-    if (!loc.valid) {
-        console.log ("not a valid city");
-        return;
-    }
-    locStored.push
-    addLocToList(locIndex, loc);
+var textInputEl = document.getElementById("tfnewsearch");
+textInputEl.addEventListener('submit',function(e) {
+  e.preventDefault();
+  var city = document.getElementById('search-textinput').value;
+  if (city.length > 0) {
+    currLoc.name = city;
+    getOneCallAPIPart1();
+  }
+  console.log("search-textinput", city);
 });
 
 // Get previously search locations from local storage
 function Init() {
     locStored = JSON.parse(localStorage.getItem("locStored") || "[]");
-    fillLocList();
+    if (locStored.length == 0) {
+      console.log("init locstorage length = 0");
+      locStored[0] = "a";
+      localStorage.setItem("locStored", JSON.stringify(locStored));
+    }
+    else {
+      fillLocList();
+    }
 }
 
+/*
 function addLocToList(i, city) {
     var li = document.createElement("li");
     li.textContent = city;
@@ -60,13 +53,7 @@ function addLocToList(i, city) {
 
     locList.appendChild(li);
 }
-
-function fillLocList() {
-    // Create six choices that user can choose from
-    for (var i = 0; i < locStored.length; i++) {
-      addLocToList(i, locStored[i]);
-    }
-}    // end of setAtributes
+*/
 
 // This is handler for clicking one of the choices
 function onClickLocList(e) {
@@ -77,68 +64,18 @@ function onClickLocList(e) {
     }
     var city;
     if (target.tagName === "LI") {
-      city = target.innerHTML;
-      var index = target.getAttribute("data-index");
+      currLoc.name = target.innerHTML;
+      //var index = target.getAttribute("data-index");
     }
-    var city = locStored[index];
+    //var city = locStored[index];
+    getOneCallAPIPart1();
 }
-
-/*
-function onClickLoc (form) {
-    currLoc = form.inputbox.value;
-    console.log ("You typed: " + TestVar);
-}
-*/
-
-function getWeatherAPI() {
-    //https://api.openweathermap.org/data/2.5/weather?q=Philadelphia&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c
-    var endpoint2 = "https://api.openweathermap.org/data/2.5/weather?q=" + currLoc.name + "&units=imperial&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c";
-    console.log("in getwweatherapi", endpoint2);
-
-    fetch(endpoint2)
-        .then(function (response) {
-            return response.json();
-        })
-        .then (function(data) {
-            console.log("getWeatherAPI data: ", data);
-            console.log("getweatherapi data[main]", data["main"]);
-            var main = data["main"];
-            summary[0].value = main.temp;
-            summary[1].value = main.humidity;
-            var wind = data["wind"];
-            summary[2].value = wind.speed;
-            summary[3].value = -1.0;
-            console.log("temp",summary[0].value);
-            fillSummary();
-            /*
-            	"main": {
-                  "temp": 295.57,
-                  "feels_like": 295.54,
-                  "temp_min": 294.15,
-                  "temp_max": 296.48,
-                  "pressure": 1012,
-                  "humidity": 64
-                },
-
-            */
-
-        })
-        .catch(err => alert("api one call fetch failed"));
-    fillSummary();
-}
-
-function KelvinToDegF(K)
-{
-
-}
-
 
 function getOneCallAPIPart2() {
-    var endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + currLoc.lat + "&lon=" + currLoc.lon + "&appid=" + APIkey;
-
+    var endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + currLoc.lat + "&lon=" + currLoc.lon + "&units=imperial&exclude=minutely,hourly&appid=" + APIkey;
+    console.log("endpoint2", endpoint2);
     //var endpoint5 = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c";
     //var endpoint2 = "https://api.openweathermap.org/data/2.5/weather?q=London&APPID=06d8f6fe2e2745ccf1ea96dd0ca1238c";
-    console.log("in getonecall", endpoint2);
 
     fetch(endpoint2)
         .then(function (response) {
@@ -147,108 +84,125 @@ function getOneCallAPIPart2() {
         .then (function(data) {
             //console.log("OneCall data: ", data);
             var current = data["current"];
-            console.log("current", current);
-            console.log("current.uvi", current.uvi);
+            summary[0].value = current.temp;
+            summary[1].value = current.humidity;
+            summary[2].value = current.wind_speed;
             summary[3].value = current.uvi;
-            fillUVIndex();
+
+            fillSummary();
+            fillUVIndex();            
+            storeGoodLocation();
         })
-        .catch(err => alert("api one call fetch failed"));
+        .catch(function (error) {
+          alert('Error connecting to weather data source -- getOneCallAPIPart2');
+        });
 }
 
-function getOneCallAPIPart1() {
-    
-    //https://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
-    
-    //if (test) {
-    //  city = "lksjdlfj";
-    //}
+function storeGoodLocation() {
+    // Get location from search box
 
+    // Put most recent is at beginning of array
+    console.log("locstored[0] before", locStored[0]);
+    locStored.unshift(currLoc.name);
+    console.log("locstored[0] after", locStored[0]);
+    fillLocList();
+    
+    localStorage.setItem("locStored", JSON.stringify(locStored));
+}
+
+function fillLocList() {
+    var locListLen = locStored.length;
+    console.log("in fileLocList", locListLen);
+    var items = locList.getElementsByTagName("li");
+    console.log("items[0]", items[0]);
+    console.log("items", items);
+    console.log("fillLocList items.length", items.length)
+    for (var i=0; i<3; i++) {
+      console.log("items[i].value", i, items[i].value);
+    }
+
+    // Clear list of question choices
+    for (var i=0; i < items.length; i++) {
+      items[i].value = "";
+    }
+    for (var i = 0; i < Math.min(locListLen, 10); i++) {
+      console.log("locStored[i]", i, locStored[i]);
+        items[i].value = locStored[i];
+    }
+}
+
+// This function gets lat and long of currLoc and calls getOneCallAPIPart2 which gets weather data and displays it. 
+function getOneCallAPIPart1() {
     var endpoint1 = "https://api.openweathermap.org/geo/1.0/direct?q=" + currLoc.name + "&APPID=" + APIkey;
     fetch(endpoint1)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        var arr = data[0];
-        console.log("arr ",arr);
-        currLoc.lon = arr.lon;
-        currLoc.lat = arr.lat;
-        console.log("lon lat", currLoc.lon, currLoc.lat)
-        console.log("Part 1 data ",data);
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var arr = data[0];
+            console.log("arr ",arr);
+            currLoc.lon = arr.lon;
+            currLoc.lat = arr.lat;
 
-        currLoc.valid = true;
-        getOneCallAPIPart2();
-    });
+            currLoc.valid = true;
+            getOneCallAPIPart2();
+        })
+        .catch(function (error) {
+          alert('Error connecting to weather data source -- getOneCallAPIPart1');
+        });
 }   // end of function getOneCallPart1()
 
+// Summary shows current temperature, humidity and windSpeed
 function fillSummary() {
-    if (test) {
-        var testEl = document.querySelector("#test-2");
-        testEl.textContent = "*********** T E S T *******************";
-    }
     summaryLoc.textContent = currLoc.name;
 
     var tempEl = document.querySelector(summary[0].id);
     tempEl.textContent = summary[0].name + summary[0].value + summary[0].units;
 
-    var humidityEl = document.querySelector("#humidity");
+    var humidityEl = document.querySelector(summary[1].id);
     humidityEl.textContent = summary[1].name + summary[1].value + summary[1].units;
 
-    var windSpeedEl = document.querySelector("#wind-speed");
+    var windSpeedEl = document.querySelector(summary[2].id);
     windSpeedEl.textContent = summary[2].name + summary[2].value + summary[2].units;
-/*
-    <p id="temp"></p>
-    <p id="humidity"></p>
-    <p id="wind-speed"></p>
-    <p id="uv-index"></p>
-*/
 }    // End of function fillSummary();
 
 function fillUVIndex() {
-
     /* https://www.epa.gov/sites/production/files/documents/uviguide.pdf */
-    var uvBgdCol;
     var uvExpCat;
     var uvClass;
     if (summary[3].value <= 2.0 ) {
-        uvBgdCol = "lightgreen";
         uvExpCat = " (Low)";
         uvClass = "uv-low";
     }
     else if (summary[3].value <= 5.0) {
-        uvBgdCol = "yellow";
         uvExpCat = " (Moderate)";
         uvClass = "uv-mod";
     }
     else if (summary[3].value <= 7.0) {
-        uvBgdCol = "orange";
         uvExpCat = " (High)";
         uvClass = "uv-high";
     }
     else if (summary[3].value <= 11.0) {
-        uvBgdCol = "red";
         uvExpCat = " (Very High";
         uvClass = "uv-very-high";
   }
     else {
-        uvBgdCol = "purple";
         uvExpCat = " (Extreme)";
         uvClass = "uv-extreme";
     }
-    var uvIndexEl = document.querySelector("#uv-index");
+
+    // UV Index
     var uvSpan1El = document.querySelector("#span-1");
     uvSpan1El.textContent = summary[3].name;
+
+    // Value
     var uvSpan2El = document.querySelector("#span-2");
     uvSpan2El.textContent = "  "+summary[3].value + "  ";
     uvSpan2El.classList.add(uvClass);
-    //uvSpan2El.setAttribute("background", uvBgdCol);
-    //uvSpan2El.style.margin-left = "2em";
-    //uvSpan2El.style.backgroundColor = uvBgdCol;
+
+    // Exposure category
     var uvSpan3El = document.querySelector("#span-3");
     uvSpan3El.textContent = uvExpCat;
-    //addSpice();
-    //uvIndexEl.textContent = summary[3].name + summary[3].value + uvExpCat;
-
 }
 
 function addSpan() {
@@ -261,5 +215,5 @@ function addSpan() {
 }
 
 // Fill table with current weather
-getWeatherAPI();
+//getWeatherAPI();
 getOneCallAPIPart1(); // All

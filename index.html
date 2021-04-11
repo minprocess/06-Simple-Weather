@@ -55,7 +55,7 @@
     <!-- From: 05-Third Party 13-Ins_Bootstrap-Layout -->
     <header class="container-fluid bg-dark text-light mb-5 p-3">
         <div class="d-flex align-items-center">
-          <h1>Simple Weather</h1>
+          <h1>Ugly Weather Dashboard</h1>
 
         </div>
     </header>
@@ -69,9 +69,23 @@
                 <p id="test-1"></p>   <!-- if test is true show it -->
                 <p>Only cities found in OpenWeather database will be added to list of recent locations</p>
                 <p>Location</p>
-                <textarea rows="1" name="location" id="location"></textarea>
-                <button type="button" name="btn-search" id="btn-search">Search</button>
+
+                <form id="tfnewsearch" method="get" action="http://www.mywebsite.com">
+                    <input type="text" class="btn-search" id="search-textinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
+                </form>
+
+
                 <ul id="location-list" class="tech">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div>
             <div class="col-9">
@@ -83,11 +97,7 @@
                         <p id="humidity"></p>
                         <p id="wind-speed"></p>
                         <p id="uv-index"><span id="span-1"></span><span id="span-2"></span><span id="span-3"></span></p>
-        
-                        <table id="summary-table" class="tab-border">
-                            <!-- Temp</br>Wind</br>Precip</br></br></br> -->
-                        </table>    
-                    </div>
+                            </div>
                 </div>
                 <div class="row">
                     <div class="col border-grn forecast"> Day 1 Forecast</br></br></br></div>
