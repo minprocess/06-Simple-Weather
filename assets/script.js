@@ -125,9 +125,10 @@ function fillLocList() {
     for (var i=0; i < items.length; i++) {
       items[i].value = "";
     }
+    items[0].value = "Denver";
     for (var i = 0; i < Math.min(locListLen, 10); i++) {
       console.log("locStored[i]", i, locStored[i]);
-        items[i].value = locStored[i];
+        items[i].textContent = locStored[i];
     }
 }
 
