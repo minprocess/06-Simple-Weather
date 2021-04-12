@@ -53,8 +53,13 @@
   margin: auto
 }
 
+#location-list{
+  padding-left: 0;
+ }
+ 
 .tech li {
 display:block;
+padding-left:0px;
 text-align: center;
 background-color: white;   /* original color: #cccccc */
 color: black;
@@ -83,7 +88,7 @@ border-radius: 3px;
 @media (min-width: 768px) {
   .main {
       padding-right: 0px;
-      padding-left: 220px; /* 180 + 40 */
+      padding-left: 0px; /* 180 + 40 */
   }
 }
 

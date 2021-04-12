@@ -122,7 +122,7 @@ function getOneCallAPIPart2() {
 
             var daily = data["daily"];
             for (var i=0; i<5; i++) {
-              var dt = daily[1].dt;  // Unix time
+              var dt = daily[i].dt;  // Unix time
               forecast[i].date = moment.unix(dt).format("MM/DD/YYYY");
               forecast[i].min = daily[i].temp.min;
               forecast[i].max = daily[i].temp.max;
@@ -275,7 +275,7 @@ function fillUVIndex() {
         uvClass = "uv-high";
     }
     else if (summary[3].value <= 11.0) {
-        uvExpCat = " (Very High";
+        uvExpCat = " (Very High)";
         uvClass = "uv-very-high";
   }
     else {
