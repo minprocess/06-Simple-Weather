@@ -13,16 +13,23 @@ If your README is long, add a table of contents to make it easy for users to fin
 - [Credits](#credits)
 - [License](#license)
 ## Installation
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+This project has one html file (index.html), one script file (script.js) and one css files (style.css).
+
 ## Usage
+When the Simple Weather Dashboard is started the current weather and 5-day forecast of the first city in the recent city list is displayed. To get the current weather and 5-day forecast of another city enter the name into the search field and either press Enter or click the Search button. If the city is found the current weather and 5-day forcast will be shown. Then the name of that city will appear at the top of the recent city list. The list will be updated in local storage. 
+
+If the city name is not recognized, 
 
 The UV-Index Exposure categories are given here
  https://www.epa.gov/sites/production/files/documents/uviguide.pdf
 
-| Exposure category |   | Header3|
---- | --- | ---
-|data1|data2|data3|
-|data11|data12|data13|
+| Exposure category | UV Index |
+--- | --- 
+| Low | 1-2|
+| Moderate | 3-5 |
+| High | 6-7 |
+| Very High | 8-10 |
+| Extreme | 11+ |
 
 
 

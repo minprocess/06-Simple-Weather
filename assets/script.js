@@ -236,7 +236,7 @@ function getOneCallAPIPart1() {
             getOneCallAPIPart2();
         })
         .catch(function (error) {
-          alert('Error connecting to weather data source -- getOneCallAPIPart1');
+          alert('Error reported by the weather data source -- city not found');
         });
 }   // end of function getOneCallPart1()
 
