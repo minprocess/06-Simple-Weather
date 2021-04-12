@@ -82,7 +82,7 @@ border-radius: 3px;
 
 @media (min-width: 768px) {
   .main {
-      padding-right: 40px;
+      padding-right: 0px;
       padding-left: 220px; /* 180 + 40 */
   }
 }
