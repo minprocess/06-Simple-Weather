@@ -86,7 +86,7 @@ function onClickLocList(e) {
     getOneCallAPIPart1();
 }
 
-function btnClearRecent( ) {
+function btnClearRecent() {
   console.log("in btnclearRecent");
   while (locStored.length > 10) {
     var len = locStored.length;

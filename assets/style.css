@@ -59,12 +59,15 @@ color: black;
 font-size:large;
 margin: 10px 0px 10px 0px;
 cursor: pointer;
-
+border-color: lightgray;
 border-radius: 3px;
 -moz-border-radius: 3px;
 
 }
-
+.tech li {
+  border-color: red;
+  /*box-shadow: 2px 3px 5px #000000;*/
+}
 /*
 .tech li {
   cursor: pointer;
