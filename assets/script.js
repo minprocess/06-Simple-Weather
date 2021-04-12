@@ -186,6 +186,7 @@ function storeGoodLocation() {
 
     var locEl = document.getElementById('search-textinput');
     locEl.textContent = "";
+    locEl.value = "";
 
     // Put most recent is at beginning of array
     console.log("locstored[0] before", locStored[0]);
