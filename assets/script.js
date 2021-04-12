@@ -10,26 +10,38 @@ var currLoc = {name:"Philadelphia", lat:39.9523, lon:-75.1625, valid: false};  /
 var locIndex = 0;
 var locList = document.querySelector("#location-list");  // ul
 var locStored;   // Array of previously searched locations stored in local storage
+locList.addEventListener("click", onClickLocList);
+
+var addToRecent = false;
 
 var summaryLoc = document.querySelector("#summary-loc");   // list of temp, humidity, wind and UV Index
 let summary = [
   {id: "#temp", name: "Temperature: ", value: "0", units: " °F" },
   {id: "#humidity", name: "Humidity: ", value: "0", units: " %" },
   {id: "#wind-speed", name: "Wind Speed: ", value: "0", units: " MPH" },
-  {id: "#uv-index", name: "UV Index: ", value: "0", units: "" }
+  {id: "#uv-index", name: "UV Index: ", value: "0", units: "" },
+  {id: "#current-sky", name: "Condition: ", value: "Sunny", units: "" }
+]
+
+let forecast = [
+  {id: "day-1", date: "02/22/2021", min: "0", max: "100", sky: "Sunny", icon: "04d" },
+  {id: "day-2", date: "02/23/2021", min: "0", max: "100", sky: "Sunny", icon: "04d" },
+  {id: "day-3", date: "02/24/2021", min: "0", max: "100", sky: "Sunny", icon: "04d" },
+  {id: "day-4", date: "02/25/2021", min: "0", max: "100", sky: "Sunny", icon: "04d" },
+  {id: "day-4", date: "02/26/2021", min: "0", max: "100", sky: "Sunny", icon: "04d" }
 ]
 
 Init();
 
-var textInputEl = document.getElementById("tfnewsearch");
+var textInputEl = document.getElementById("tfnewsearch");   // name of form
 textInputEl.addEventListener('submit',function(e) {
-  e.preventDefault();
-  var city = document.getElementById('search-textinput').value;
-  if (city.length > 0) {
-    currLoc.name = city;
-    getOneCallAPIPart1();
-  }
-  console.log("search-textinput", city);
+    e.preventDefault();
+    var city = document.getElementById('search-textinput').value;
+    if (city.length > 0) {
+      currLoc.name = city;
+      getOneCallAPIPart1();
+    }
+    //console.log("search-textinput", city);
 });
 
 // Get previously search locations from local storage
@@ -39,8 +51,10 @@ function Init() {
       console.log("init locstorage length = 0");
       locStored[0] = "a";
       localStorage.setItem("locStored", JSON.stringify(locStored));
+      addToRecent = true;
     }
     else {
+      currLoc.name = locStored[0];
       fillLocList();
     }
 }
@@ -55,7 +69,7 @@ function addLocToList(i, city) {
 }
 */
 
-// This is handler for clicking one of the choices
+// This is handler for clicking one of the locations in the recent locations list
 function onClickLocList(e) {
     var target = e.target; // Clicked element
     while (target && target.parentNode !== locList) {
@@ -65,16 +79,29 @@ function onClickLocList(e) {
     var city;
     if (target.tagName === "LI") {
       currLoc.name = target.innerHTML;
+      console.log("target.innerHTML", currLoc.name);
       //var index = target.getAttribute("data-index");
     }
     //var city = locStored[index];
     getOneCallAPIPart1();
 }
 
+function btnClearRecent( ) {
+  console.log("in btnclearRecent");
+  while (locStored.length > 10) {
+    var len = locStored.length;
+    locStored.splice(len-1, 1);
+  }
+  for (var i=0; i<locStored.length; i++) {
+    locStored[i] = "";
+  }
+  fillLocList();
+}
+
 function getOneCallAPIPart2() {
     var endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + currLoc.lat + "&lon=" + currLoc.lon + "&units=imperial&exclude=minutely,hourly&appid=" + APIkey;
     console.log("endpoint2", endpoint2);
-    //var endpoint5 = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&exclude=hourly,daily&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c";
+    // https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&units=imperial&exclude=minutely,hourly&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c
     //var endpoint2 = "https://api.openweathermap.org/data/2.5/weather?q=London&APPID=06d8f6fe2e2745ccf1ea96dd0ca1238c";
 
     fetch(endpoint2)
@@ -88,23 +115,93 @@ function getOneCallAPIPart2() {
             summary[1].value = current.humidity;
             summary[2].value = current.wind_speed;
             summary[3].value = current.uvi;
+            var sky = current.weather[0].description;
+            summary[4].value = sky;
 
             fillSummary();
-            fillUVIndex();            
-            storeGoodLocation();
+            fillUVIndex();
+
+            var daily = data["daily"];
+            for (var i=0; i<5; i++) {
+              var dt = daily[1].dt;  // Unix time
+              forecast[i].date = moment.unix(dt).format("MM/DD/YYYY");
+              forecast[i].min = daily[i].temp.min;
+              forecast[i].max = daily[i].temp.max;
+              var sky = daily[i].weather[0];
+              forecast[i].sky = sky.description;
+              forecast[i].icon = sky.icon;
+
+              console.log("date, sky, min, max, icon", i, forecast[i].date, forecast[i].sky, forecast[i].min, forecast[i].max, forecast[i].icon);
+              /*
+              console.log("min", i, forecast[i].min);
+              console.log("max", i, forecast[i].max);
+              console.log("icon", i, forecast[i].icon);
+              console.log("sky", i, forecast[i].sky);
+              console.log("daily[i].weather", i, sky);
+              //console.logsummary-loc("daily temp min", min);
+              //console.log("forecast time", dateString);
+              //console.log("dt", dt);
+              */
+            }
+
+            showFiveDayForecast();
+
+            // The default city is Phildelphia
+            
+            if(addToRecent) {
+              storeGoodLocation();
+            }
+            else {
+              addToRecent = true;
+            }
+            
         })
         .catch(function (error) {
           alert('Error connecting to weather data source -- getOneCallAPIPart2');
         });
 }
 
+function showFiveDayForecast( ) {
+  const idArr = ["#fcdate-", "#fcsky-", "#fcmin-", "#fcmax-"];
+  for (var i=0; i<5; i++) {
+    var tagDateId = idArr[0]+i;
+    console.log("showFiveDayForecast i, tagDateId", i, tagDateId);
+       var dateEl = document.querySelector(tagDateId);
+    console.log("showFiveDayForecast", i, dateEl);
+    dateEl.textContent = forecast[i].date;
+
+    var tagSkyId = idArr[1]+i;
+    var skyEl = document.querySelector(tagSkyId);
+    skyEl.textContent = forecast[i].sky;
+    console.log("showFiveDayForecast sky", i, forecast[i].sky);
+
+    var tagMinId = idArr[2]+i;
+    var minEl = document.querySelector(tagMinId);
+    minEl.textContent = "Min: "+forecast[i].min;
+
+    var tagMaxId = idArr[3]+i;
+    var maxEl = document.querySelector(tagMaxId);
+    maxEl.textContent = "Max: "+forecast[i].max;
+  }
+}
+
 function storeGoodLocation() {
     // Get location from search box
 
+    var locEl = document.getElementById('search-textinput');
+    locEl.textContent = "";
+
     // Put most recent is at beginning of array
     console.log("locstored[0] before", locStored[0]);
+
+    for (var i=0; i<Math.min(locStored.length, 10); i++) {
+        if (currLoc.name == locStored[i]) {
+          locStored.splice(i, 1);
+        }
+    }
+
     locStored.unshift(currLoc.name);
-    console.log("locstored[0] after", locStored[0]);
+    //console.log("locstored[0] after", locStored[0]);
     fillLocList();
     
     localStorage.setItem("locStored", JSON.stringify(locStored));
@@ -112,22 +209,15 @@ function storeGoodLocation() {
 
 function fillLocList() {
     var locListLen = locStored.length;
-    console.log("in fileLocList", locListLen);
     var items = locList.getElementsByTagName("li");
-    console.log("items[0]", items[0]);
-    console.log("items", items);
-    console.log("fillLocList items.length", items.length)
-    for (var i=0; i<3; i++) {
-      console.log("items[i].value", i, items[i].value);
-    }
 
     // Clear list of question choices
     for (var i=0; i < items.length; i++) {
-      items[i].value = "";
+      items[i].textContent = "";
     }
-    items[0].value = "Denver";
+
     for (var i = 0; i < Math.min(locListLen, 10); i++) {
-      console.log("locStored[i]", i, locStored[i]);
+        console.log("fillLocListlocStored[i]", i, locStored[i]);
         items[i].textContent = locStored[i];
     }
 }
@@ -155,7 +245,8 @@ function getOneCallAPIPart1() {
 
 // Summary shows current temperature, humidity and windSpeed
 function fillSummary() {
-    summaryLoc.textContent = currLoc.name;
+    var currDate = moment().format("MM/DD/YYYY");
+    summaryLoc.textContent = currLoc.name + " (" + currDate + ")";
 
     var tempEl = document.querySelector(summary[0].id);
     tempEl.textContent = summary[0].name + summary[0].value + summary[0].units;
@@ -165,6 +256,9 @@ function fillSummary() {
 
     var windSpeedEl = document.querySelector(summary[2].id);
     windSpeedEl.textContent = summary[2].name + summary[2].value + summary[2].units;
+
+    var skyEl = document.querySelector(summary[4].id);
+    skyEl.textContent = summary[4].name + summary[4].value;
 }    // End of function fillSummary();
 
 function fillUVIndex() {

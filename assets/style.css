@@ -53,25 +53,66 @@
 
 .tech li {
 display:block;
-width: 200px;
 text-align: center;
-background-color: purple;   /* original color: #cccccc */
-color: white;
+background-color: white;   /* original color: #cccccc */
+color: black;
 font-size:large;
 margin: 10px 0px 10px 0px;
 cursor: pointer;
 
 border-radius: 3px;
 -moz-border-radius: 3px;
-box-shadow: 2px 3px 5px #000000;
+
 }
+
 /*
 .tech li {
   cursor: pointer;
 }
 */
+
 .tech li:hover {
-  background-color: rgb(29, 87, 29);  /* rgb(29, 87, 29) */
+  background-color: whitesmoke;  /* rgb(29, 87, 29) */
+}
+
+@media (min-width: 768px) {
+  .main {
+      padding-right: 40px;
+      padding-left: 220px; /* 180 + 40 */
+  }
+}
+
+.border-blk {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.border-red {
+  border-top: 1px solid red;
+  border-right: 1px solid red;
+  border-bottom: 1px solid red;
+  border-left: 1px solid red;
+}
+
+.border-lightgray {
+  border-top: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+}
+
+.border-grn {
+  border-top: 1px solid green;
+  border-right: 1px solid green;
+  border-bottom: 1px solid green;
+  border-left: 1px solid green;
+  border-radius: 5px;
+}
+
+.height-1 {
+  height: 100vh;
 }
 
 

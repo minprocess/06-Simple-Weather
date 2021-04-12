@@ -11,43 +11,6 @@
 </head>
 
 <style>
-    .sidebar {
-    width: 180px;
-    }
-
-    @media (min-width: 768px) {
-        .main {
-            padding-right: 40px;
-            padding-left: 220px; /* 180 + 40 */
-        }
-    }
-
-    .border-blk {
-        border-top: 1px solid black;
-        border-right: 1px solid black;
-        border-bottom: 1px solid black;
-        border-left: 1px solid black;
-    }
-
-    .border-red {
-        border-top: 1px solid red;
-        border-right: 1px solid red;
-        border-bottom: 1px solid red;
-        border-left: 1px solid red;
-    }
-
-    .border-grn {
-        border-top: 1px solid green;
-        border-right: 1px solid green;
-        border-bottom: 1px solid green;
-        border-left: 1px solid green;
-        border-radius: 5px;
-    }
-
-    .height-1 {
-        height: 100vh;
-    }
-
 </style>
 
 
@@ -73,8 +36,9 @@
                 <form id="tfnewsearch" method="get" action="http://www.mywebsite.com">
                     <input type="text" class="btn-search" id="search-textinput" name="q" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
                 </form>
-
-
+<br>
+                <button id="clear-recent", onclick="btnClearRecent">Clear Recent</button>
+<br>
                 <ul id="location-list" class="tech">
                     <li></li>
                     <li></li>
@@ -89,27 +53,57 @@
                 </ul>
             </div>
             <div class="col-9">
-                <div class="row border-red">
+                <div class="row border-light-grad">
                     <div class="col">
                         <p id="test-2"></p>   <!-- if test is true show it -->
-                        <h2 id="summary-loc"></h2>
+                        <h3 id="summary-loc"></h3>
+                        <p id="current-sky"></p>
                         <p id="temp"></p>
                         <p id="humidity"></p>
                         <p id="wind-speed"></p>
                         <p id="uv-index"><span id="span-1"></span><span id="span-2"></span><span id="span-3"></span></p>
-                            </div>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col border-grn forecast"> Day 1 Forecast</br></br></br></div>
-                    <div class="col border-grn forecast"> Day 2 Forecast</br></br></br></div>
-                    <div class="col border-grn forecast"> Day 3 Forecast</br></br></br></div>
-                    <div class="col border-grn forecast"> Day 4 Forecast</br></br></br></div>
-                    <div class="col border-grn forecast"> Day 5 Forecast</br></br></br></div>
-
+                    <h3>5-Day Forecast</h3>
+                </div>
+                <div class="row">
+                    <div class="col border-grn forecast id=day-1">
+                        <p id="fcdate-0"></p>
+                        <p id="fcsky-0"></p>
+                        <p id="fcmin-0"></p>
+                        <p id="fcmax-0"></p>
+                    </div>
+                    <div class="col border-grn forecast id=day-2">
+                        <p id="fcdate-1"></p>
+                        <p id="fcsky-1"></p>
+                        <p id="fcmin-1"></p>
+                        <p id="fcmax-1"></p>
+                    </div>
+                    <div class="col border-grn forecast id=day-4">
+                        <p id="fcdate-2"></p>
+                        <p id="fcsky-2"></p>
+                        <p id="fcmin-2"></p>
+                        <p id="fcmax-2"></p>
+                    </div>
+                    <div class="col border-grn forecast id=day-3">
+                        <p id="fcdate-3"></p>
+                        <p id="fcsky-3"></p>
+                        <p id="fcmin-3"></p>
+                        <p id="fcmax-3"></p>
+                    </div>
+                    <div class="col border-grn forecast id=day-4">
+                        <p id="fcdate-4"></p>
+                        <p id="fcsky-4"></p>
+                        <p id="fcmin-4"></p>
+                        <p id="fcmax-4"></p>
+                    </div>
                 </div>
             <div>
         </div>
     </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="./assets/script.js"></script>
 <!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>-->
 </body>
