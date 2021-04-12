@@ -1,11 +1,8 @@
 # Simple Weather Dashboard
 ## Description
 Simple Weather Dashboard shows a few simple weather details for a location given by the user. The weather data is provided by openweathermap.org using the One Call API. 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
+
+The calls to the Open Weather Map API are made with fetch which is an asynchronous method. 
 
 ## Installation
 This project has one html file (index.html), one script file (script.js) and one css files (style.css). The script.js and style.css files are in the asset folder.
@@ -38,15 +35,10 @@ A screenshot of the application is shown below.
 5. Clean up style.css, it is a mess.
 6. Use JavaScript to write the forecast details instead of a bunch of divs
 
-## Credits
-List your collaborators, if any, with links to their GitHub profiles.
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-If you followed tutorials, include links to those here as well.
-
 ## License
 MIT License
 
-Copyright (c) [year] [fullname]
+Copyright (c) [2021] [William T. Pate]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
