@@ -86,14 +86,17 @@ function onClickLocList(e) {
 }
 
 function btnClearRecent() {
-  console.log("in btnclearRecent");
   while (locStored.length > 10) {
     var len = locStored.length;
     locStored.splice(len-1, 1);
   }
+
+  console.log("locStorred", locStored);
   for (var i=0; i<locStored.length; i++) {
     locStored[i] = "";
   }
+  console.log("locStorred", locStored);
+
   fillLocList();
 }
 
