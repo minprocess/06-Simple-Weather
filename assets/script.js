@@ -49,7 +49,6 @@ function Init() {
     locStored = JSON.parse(localStorage.getItem("locStored") || "[]");
     if (locStored.length == 0) {
       console.log("init locstorage length = 0");
-      locStored[0] = "a";
       localStorage.setItem("locStored", JSON.stringify(locStored));
       addToRecent = true;
     }
@@ -165,15 +164,12 @@ function showFiveDayForecast( ) {
   const idArr = ["#fcdate-", "#fcsky-", "#fcmin-", "#fcmax-"];
   for (var i=0; i<5; i++) {
     var tagDateId = idArr[0]+i;
-    console.log("showFiveDayForecast i, tagDateId", i, tagDateId);
-       var dateEl = document.querySelector(tagDateId);
-    console.log("showFiveDayForecast", i, dateEl);
+    var dateEl = document.querySelector(tagDateId);
     dateEl.textContent = forecast[i].date;
 
     var tagSkyId = idArr[1]+i;
     var skyEl = document.querySelector(tagSkyId);
     skyEl.textContent = forecast[i].sky;
-    console.log("showFiveDayForecast sky", i, forecast[i].sky);
 
     var tagMinId = idArr[2]+i;
     var minEl = document.querySelector(tagMinId);
@@ -225,6 +221,7 @@ function fillLocList() {
 // This function gets lat and long of currLoc and calls getOneCallAPIPart2 which gets weather data and displays it. 
 function getOneCallAPIPart1() {
     var endpoint1 = "https://api.openweathermap.org/geo/1.0/direct?q=" + currLoc.name + "&APPID=" + APIkey;
+    console.log("getOneCallAPIPart1", endpoint1);
     fetch(endpoint1)
         .then(function (response) {
             return response.json();

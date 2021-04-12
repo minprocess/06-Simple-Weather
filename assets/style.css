@@ -49,6 +49,8 @@
   margin-top: 10px;
   list-style:none;
   list-style-position:outside;
+  text-align: center; 
+  margin: auto
 }
 
 .tech li {
@@ -107,11 +109,11 @@ border-radius: 3px;
 }
 
 .border-grn {
-  border-top: 1px solid green;
-  border-right: 1px solid green;
-  border-bottom: 1px solid green;
-  border-left: 1px solid green;
-  border-radius: 5px;
+  border-top: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+  border-radius: 2px;
 }
 
 .height-1 {
