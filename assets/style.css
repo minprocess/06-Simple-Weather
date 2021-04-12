@@ -65,8 +65,8 @@ border-radius: 3px;
 
 }
 .tech li {
-  border-color: red;
-  /*box-shadow: 2px 3px 5px #000000;*/
+  /*border-color: red;*/
+  box-shadow: 2px 3px 5px #000000;
 }
 /*
 .tech li {
