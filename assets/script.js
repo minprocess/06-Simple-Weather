@@ -41,14 +41,12 @@ textInputEl.addEventListener('submit',function(e) {
       currLoc.name = city;
       getOneCallAPIPart1();
     }
-    //console.log("search-textinput", city);
 });
 
 // Get previously search locations from local storage
 function Init() {
     locStored = JSON.parse(localStorage.getItem("locStored") || "[]");
     if (locStored.length == 0) {
-      console.log("init locstorage length = 0");
       localStorage.setItem("locStored", JSON.stringify(locStored));
       addToRecent = true;
     }
@@ -57,16 +55,6 @@ function Init() {
       fillLocList();
     }
 }
-
-/*
-function addLocToList(i, city) {
-    var li = document.createElement("li");
-    li.textContent = city;
-    li.setAttribute("data-index", i);
-
-    locList.appendChild(li);
-}
-*/
 
 // This is handler for clicking one of the locations in the recent locations list
 function onClickLocList(e) {
@@ -78,8 +66,6 @@ function onClickLocList(e) {
     var city;
     if (target.tagName === "LI") {
       currLoc.name = target.innerHTML;
-      console.log("target.innerHTML", currLoc.name);
-      //var index = target.getAttribute("data-index");
     }
     //var city = locStored[index];
     getOneCallAPIPart1();
@@ -91,18 +77,12 @@ function btnClearRecent() {
     locStored.splice(len-1, 1);
   }
 
-  console.log("locStorred", locStored);
-  for (var i=0; i<locStored.length; i++) {
-    locStored[i] = "";
-  }
-  console.log("locStorred", locStored);
-
   fillLocList();
 }
 
 function getOneCallAPIPart2() {
     var endpoint2 = "https://api.openweathermap.org/data/2.5/onecall?lat=" + currLoc.lat + "&lon=" + currLoc.lon + "&units=imperial&exclude=minutely,hourly&appid=" + APIkey;
-    console.log("endpoint2", endpoint2);
+
     // https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&units=imperial&exclude=minutely,hourly&appid=06d8f6fe2e2745ccf1ea96dd0ca1238c
     //var endpoint2 = "https://api.openweathermap.org/data/2.5/weather?q=London&APPID=06d8f6fe2e2745ccf1ea96dd0ca1238c";
 
@@ -111,7 +91,6 @@ function getOneCallAPIPart2() {
           return response.json();
         })
         .then (function(data) {
-            //console.log("OneCall data: ", data);
             var current = data["current"];
             summary[0].value = current.temp;
             summary[1].value = current.humidity;
@@ -131,20 +110,7 @@ function getOneCallAPIPart2() {
               forecast[i].max = daily[i].temp.max;
               var sky = daily[i].weather[0];
               forecast[i].sky = sky.description;
-              forecast[i].icon = sky.icon;
-
-              console.log("date, sky, min, max, icon", i, forecast[i].date, forecast[i].sky, forecast[i].min, forecast[i].max, forecast[i].icon);
-              /*
-              console.log("min", i, forecast[i].min);
-              console.log("max", i, forecast[i].max);
-              console.log("icon", i, forecast[i].icon);
-              console.log("sky", i, forecast[i].sky);
-              console.log("daily[i].weather", i, sky);
-              //console.logsummary-loc("daily temp min", min);
-              //console.log("forecast time", dateString);
-              //console.log("dt", dt);
-              */
-            }
+              forecast[i].icon = sky.icon;            }
 
             showFiveDayForecast();
 
@@ -186,14 +152,11 @@ function showFiveDayForecast( ) {
 
 function storeGoodLocation() {
     // Get location from search box
-
     var locEl = document.getElementById('search-textinput');
     locEl.textContent = "";
     locEl.value = "";
 
-    // Put most recent is at beginning of array
-    console.log("locstored[0] before", locStored[0]);
-
+    // Put most recent at beginning of array with array.splice
     for (var i=0; i<Math.min(locStored.length, 10); i++) {
         if (currLoc.name == locStored[i]) {
           locStored.splice(i, 1);
@@ -201,7 +164,6 @@ function storeGoodLocation() {
     }
 
     locStored.unshift(currLoc.name);
-    //console.log("locstored[0] after", locStored[0]);
     fillLocList();
     
     localStorage.setItem("locStored", JSON.stringify(locStored));
@@ -217,7 +179,6 @@ function fillLocList() {
     }
 
     for (var i = 0; i < Math.min(locListLen, 10); i++) {
-        console.log("fillLocListlocStored[i]", i, locStored[i]);
         items[i].textContent = locStored[i];
     }
 }
@@ -225,14 +186,12 @@ function fillLocList() {
 // This function gets lat and long of currLoc and calls getOneCallAPIPart2 which gets weather data and displays it. 
 function getOneCallAPIPart1() {
     var endpoint1 = "https://api.openweathermap.org/geo/1.0/direct?q=" + currLoc.name + "&APPID=" + APIkey;
-    console.log("getOneCallAPIPart1", endpoint1);
     fetch(endpoint1)
         .then(function (response) {
             return response.json();
         })
         .then(function (data) {
             var arr = data[0];
-            console.log("arr ",arr);
             currLoc.lon = arr.lon;
             currLoc.lat = arr.lat;
 
