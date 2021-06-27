@@ -5,12 +5,12 @@ Simple Weather Dashboard shows a few simple weather details for a location given
 The calls to the Open Weather Map API are made with fetch which is an asynchronous method. 
 
 ## Installation
-This project has one html file (index.html), one script file (script.js) and one css files (style.css). The script.js and style.css files are in the asset folder.
+This app uses: HTML, CSS, JavaScript, Bootstrap 4.5, font-awesome 4.7, jQuery and Moment
+<br>
+Source on GitHub: https://github.com/minprocess/06-Simple-Weather
+<br>
+Published on GitHub pages: https://minprocess.github.io/06-Simple-Weather/
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 ## Usage
 When the Simple Weather Dashboard is started the current weather and 5-day forecast of the first city in the recent city list is displayed. To get the current weather and 5-day forecast of another city enter the name into the search field and either press Enter or click the Search button. If the city is found the current weather and 5-day forcast will be shown. Then the name of that city will appear at the top of the recent city list. The list will be updated in local storage. 
